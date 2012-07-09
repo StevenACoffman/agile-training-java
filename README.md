@@ -1,8 +1,11 @@
-Agile Project in Java
-=====================
+Agile Training Project in Java
+==============================
+
+This is a skeleton project for an agile training class in Java
 
 To Get Started:
-* git clone git@github.com:nhajratw/agile-project-java.git
+* Fork this project
+* Clone your project locally
 * mvn clean install
 
 
