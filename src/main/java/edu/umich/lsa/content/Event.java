@@ -72,9 +72,9 @@ public class Event
 	public void commit() throws IOException
 	{
 		File file = new File(EVENT_FILE_NAME);
+		System.out.println(EVENT_FILE_NAME);
 		file.createNewFile();
 		Files.write("rating = " + rating, file, Charsets.UTF_8);
-
 	}
 
 }

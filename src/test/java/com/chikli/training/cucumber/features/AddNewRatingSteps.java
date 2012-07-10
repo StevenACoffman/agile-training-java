@@ -2,6 +2,10 @@ package com.chikli.training.cucumber.features;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.io.File;
+
+import cucumber.annotation.After;
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
@@ -9,6 +13,7 @@ import edu.umich.lsa.content.Event;
 
 public class AddNewRatingSteps
 {
+	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
 
 	private Event event;
 
@@ -35,6 +40,13 @@ public class AddNewRatingSteps
 		Event newEvent = new Event();
 
 		assertThat(newEvent.getRating(), is(4));
+
 	}
 
+	@After
+	public void cleanup() throws Throwable
+	{
+		File ratingFile = new File(EVENT_FILE_NAME);
+		ratingFile.delete();
+	}
 }
