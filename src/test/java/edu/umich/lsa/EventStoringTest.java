@@ -30,7 +30,7 @@ public class EventStoringTest
 	@Test
 	public void rateCommitCreatesAFile() throws Exception
 	{
-		Event event = new Event();
+		Event event = new Event("1");
 		event.rate(2);
 		event.commit();
 		File file = new File(EVENT_FILE_NAME);
@@ -40,23 +40,32 @@ public class EventStoringTest
 	@Test
 	public void fileHasRatingContents() throws Exception
 	{
-		Event event = new Event();
+		Event event = new Event("1");
 		event.rate(2);
 		event.commit();
 		File file = new File(EVENT_FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
 
 		assertThat(lines.size(), is(1));
-		assertThat(lines.get(0), is("rating = 2"));
+		assertThat(lines.get(0), is("rating_1 = 2"));
 	}
 
 	@Test
 	public void getRatingContentsFromFile() throws Exception
 	{
-		Event event = new Event();
+		Event event = new Event("1");
 		event.rate(4);
 		event.commit();
-		Event anotherEvent = new Event();
-		assertThat(anotherEvent.getRating(), is(4));
+		Event sameEventFromFile = new Event("1");
+		assertThat(sameEventFromFile.getRating(), is(4));
+	}
+
+	@Test
+	public void getRatingsForEventByIdFromFile() throws Exception
+	{
+		File file = new File(EVENT_FILE_NAME);
+		Files.write("rating_99 = 14", file, Charsets.UTF_8);
+		Event event = new Event("99");
+		assertThat(event.getRating(), is(14));
 	}
 }

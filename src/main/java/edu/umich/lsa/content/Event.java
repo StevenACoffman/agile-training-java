@@ -10,12 +10,16 @@ import com.google.common.io.Files;
 
 public class Event
 {
+	private static final String RATING_PREFIX = "rating_";
 	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
 	private int rating;
 	private final Properties properties;
 
-	public Event()
+	private final String ratingName;
+
+	public Event(String id)
 	{
+		this.ratingName = RATING_PREFIX + id;
 		rating = 0;
 		properties = new Properties();
 	}
@@ -53,7 +57,7 @@ public class Event
 		try
 		{
 			loadProperties();
-			String ratingStr = properties.getProperty("rating", "-1");
+			String ratingStr = properties.getProperty(ratingName, "-1");
 			if (ratingStr != null && !ratingStr.equals("-1"))
 			{
 				rating = Integer.parseInt(ratingStr);
@@ -73,7 +77,7 @@ public class Event
 	{
 		File file = new File(EVENT_FILE_NAME);
 		file.createNewFile();
-		Files.write("rating = " + rating, file, Charsets.UTF_8);
+		Files.write(ratingName + " = " + rating, file, Charsets.UTF_8);
 	}
 
 }

@@ -1,13 +1,14 @@
 Feature: Add New Rating
 
-@wip
+@ok
 Scenario: Adding a new rating
-	Given there is an event that I have not rated
+	Given there is 1 event that I have not rated
 	When I rate the event
 	Then the event rating is recorded
 	
+@wip	
 Scenario: Adding a new rating for one out of two events
-	Given there are two events that I have not rated
+	Given there are 2 events that I have not rated
 	When I rate the first event
 	Then only the first event's rating is recorded
 	

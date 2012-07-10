@@ -15,32 +15,43 @@ public class AddNewRatingSteps
 {
 	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
 
-	private Event event;
+	private Event firstEvent;
+	private Event secondEvent;
 
-	@Given("^there is an event that I have not rated$")
-	public void there_is_an_event_that_I_have_not_rated() throws Throwable
+	@Given("^there (?:is|are) (\\d+) events? that I have not rated$")
+	public void createEvents(int numberOfEvents) throws Throwable
 	{
-
-		event = new Event();
-		assertThat(event.getRating(), is(0));
+		firstEvent = new Event("1");
+		if (numberOfEvents == 2)
+		{
+			secondEvent = new Event("2");
+		}
 	}
 
-	@When("^I rate the event$")
-	public void I_rate_the_event() throws Throwable
+	@When("^I rate the (?:first |.*)event$")
+	public void I_rate_the_first_event() throws Throwable
 	{
-
-		event.rate(4);
-		event.commit();
+		firstEvent.rate(4);
+		firstEvent.commit();
 	}
 
 	@Then("^the event rating is recorded$")
 	public void the_event_rating_is_recorded() throws Throwable
 	{
 
-		Event newEvent = new Event();
+		Event newEvent = new Event("1");
 
 		assertThat(newEvent.getRating(), is(4));
 
+	}
+
+	@Then("^only the first event's rating is recorded$")
+	public void only_the_first_event_s_rating_is_recorded() throws Throwable
+	{
+		Event firstEventFromFile = new Event("1");
+		assertThat(firstEventFromFile.getRating(), is(4));
+		Event secondEventFromFile = new Event("2");
+		assertThat(secondEventFromFile.getRating(), is(0));
 	}
 
 	@After
