@@ -10,14 +10,9 @@ import com.google.common.io.Files;
 
 public class Event
 {
-	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + "event.txt";
+	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
 	private int rating;
 	private final Properties properties;
-
-	static
-	{
-		System.out.println(EVENT_FILE_NAME);
-	}
 
 	public Event()
 	{
@@ -28,16 +23,19 @@ public class Event
 	private void loadProperties()
 	{
 		File file = new File(EVENT_FILE_NAME);
+		if (file.exists())
+		{
+			try
+			{
+				FileReader reader = new FileReader(file);
 
-		try
-		{
-			FileReader reader = new FileReader(file);
-			properties.load(reader);
-			reader.close();
-		} catch (IOException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+				properties.load(reader);
+				reader.close();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 
