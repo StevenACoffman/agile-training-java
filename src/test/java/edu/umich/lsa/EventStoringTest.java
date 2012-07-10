@@ -33,7 +33,7 @@ public class EventStoringTest
 		Event event = new Event();
 		event.rate(2);
 		event.commit();
-		File file = new File(System.getProperty("java.io.tmpdir") + "event.txt");
+		File file = new File(EVENT_FILE_NAME);
 		assertTrue(file.exists());
 	}
 
