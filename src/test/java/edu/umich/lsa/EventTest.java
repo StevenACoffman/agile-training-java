@@ -7,20 +7,22 @@ import org.junit.Test;
 
 import edu.umich.lsa.content.Event;
 
-public class EventTest {
+public class EventTest
+{
 
 	@Test
-	public void checkThatNewEventIsUnrated()
+	public void newEventIsUnrated()
 	{
 		Event event = new Event();
 		assertThat(event.getRating(), is(0));
 	}
-	
+
 	@Test
-	public void checkThatRatingCanBeSet() 
+	public void ratingCanBeSet()
 	{
 		Event event = new Event();
 		event.rate(3);
 		assertThat(event.getRating(), is(3));
 	}
+
 }
