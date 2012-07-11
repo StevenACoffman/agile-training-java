@@ -46,8 +46,8 @@ public class EventStoringTest
 		File file = new File(EVENT_FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
 
-		assertThat(lines.size(), is(1));
-		assertThat(lines.get(0), is("rating_1 = 2"));
+		assertThat(lines.size(), is(2));
+		assertThat(lines.get(1), is("rating_1=2"));
 	}
 
 	@Test
@@ -68,4 +68,5 @@ public class EventStoringTest
 		Event event = new Event("99");
 		assertThat(event.getRating(), is(14));
 	}
+
 }

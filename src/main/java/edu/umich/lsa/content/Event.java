@@ -2,16 +2,15 @@ package edu.umich.lsa.content;
 
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.util.Properties;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 
 public class Event
 {
 	private static final String RATING_PREFIX = "rating_";
-	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
+	private final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
 	private int rating;
 	private final Properties properties;
 
@@ -20,8 +19,10 @@ public class Event
 	public Event(String id)
 	{
 		this.ratingName = RATING_PREFIX + id;
+
 		rating = 0;
 		properties = new Properties();
+		loadProperties();
 	}
 
 	private void loadProperties()
@@ -56,7 +57,6 @@ public class Event
 	{
 		try
 		{
-			loadProperties();
 			String ratingStr = properties.getProperty(ratingName, "-1");
 			if (ratingStr != null && !ratingStr.equals("-1"))
 			{
@@ -76,8 +76,15 @@ public class Event
 	public void commit() throws IOException
 	{
 		File file = new File(EVENT_FILE_NAME);
-		file.createNewFile();
-		Files.write(ratingName + " = " + rating, file, Charsets.UTF_8);
+		if (!file.exists())
+		{
+			file.createNewFile();
+		}
+		properties.setProperty(ratingName, Integer.toString(rating));
+		Writer out = new FileWriter(file);
+		properties.store(out, null);
+		out.close();
+
 	}
 
 }
