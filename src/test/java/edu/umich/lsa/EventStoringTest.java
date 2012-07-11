@@ -1,6 +1,7 @@
 package edu.umich.lsa;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -67,6 +68,21 @@ public class EventStoringTest
 		Files.write("rating_99 = 14", file, Charsets.UTF_8);
 		Event event = new Event("99");
 		assertThat(event.getRating(), is(14));
+	}
+	
+	@Test
+	public void twoRatedEvents() throws Exception 
+	{
+		Event eventOne = new Event("1");
+		Event eventTwo = new Event("2");
+		eventOne.rate(3);
+		eventOne.commit();
+		eventTwo.rate(5);
+		eventTwo.commit();
+		File file = new File(EVENT_FILE_NAME);
+		List<String> lines = Files.readLines(file, Charsets.UTF_8);
+		assertThat(lines.contains("rating_1=3"), is(true));
+		assertThat(lines.contains("rating_2=5"), is(true));
 	}
 
 }

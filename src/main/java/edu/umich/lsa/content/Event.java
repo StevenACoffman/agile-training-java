@@ -33,7 +33,6 @@ public class Event
 			try
 			{
 				FileReader reader = new FileReader(file);
-
 				properties.load(reader);
 				reader.close();
 			} catch (IOException e)
@@ -75,6 +74,8 @@ public class Event
 
 	public void commit() throws IOException
 	{
+		loadProperties();
+		
 		File file = new File(EVENT_FILE_NAME);
 		if (!file.exists())
 		{
@@ -84,7 +85,6 @@ public class Event
 		Writer out = new FileWriter(file);
 		properties.store(out, null);
 		out.close();
-
 	}
 
 }
