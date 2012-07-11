@@ -34,7 +34,6 @@ public class AddNewRatingSteps
 	{
 		Event eventToRate = eventList.get(eventNumber - 1);
 		eventToRate.rate(rating);
-		eventToRate.commit();
 		System.out.println("Rating Event Number:" + eventNumber + " as: " + rating);
 	}
 

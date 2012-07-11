@@ -70,9 +70,17 @@ public class Event
 	public void rate(int score)
 	{
 		rating = score;
+		try 
+		{
+			commit();
+		} catch (IOException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
-	public void commit() throws IOException
+	private void commit() throws IOException
 	{
 		loadProperties();
 		

@@ -1,7 +1,6 @@
 package edu.umich.lsa;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -33,7 +32,6 @@ public class EventStoringTest
 	{
 		Event event = new Event("1");
 		event.rate(2);
-		event.commit();
 		File file = new File(EVENT_FILE_NAME);
 		assertTrue(file.exists());
 	}
@@ -43,7 +41,6 @@ public class EventStoringTest
 	{
 		Event event = new Event("1");
 		event.rate(2);
-		event.commit();
 		File file = new File(EVENT_FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
 
@@ -56,7 +53,6 @@ public class EventStoringTest
 	{
 		Event event = new Event("1");
 		event.rate(4);
-		event.commit();
 		Event sameEventFromFile = new Event("1");
 		assertThat(sameEventFromFile.getRating(), is(4));
 	}
@@ -76,9 +72,7 @@ public class EventStoringTest
 		Event eventOne = new Event("1");
 		Event eventTwo = new Event("2");
 		eventOne.rate(3);
-		eventOne.commit();
 		eventTwo.rate(5);
-		eventTwo.commit();
 		File file = new File(EVENT_FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
 		assertThat(lines.contains("rating_1=3"), is(true));
