@@ -4,8 +4,9 @@ Feature: Add New Rating
 Scenario: Adding a new rating for a single event
 	Given there is 1 event that I have not rated
 	When I rate event 1 as 4
-	Then event 1 rating is recorded as 4
-		
+	Then event 1's rating is recorded as 4
+
+@ok		
 Scenario: Adding a new rating for one out of two events
 	Given there are 2 events that I have not rated
 	When I rate event 1 as 4

@@ -9,25 +9,51 @@ import edu.umich.lsa.Event;
 import edu.umich.lsa.Ratings;
 
 public class AddNewRatingSteps
-{		
+{
 	private Ratings ratings;
-	private Event event;
+	private Event firstEvent;
+	private Event secondEvent;
 
 	@Given("^there (?:is|are) (\\d+) events? that I have not rated$")
-	public void atLeastOneUnratedEventExists(int arg1) throws Throwable {
+	public void createUnratedEvents(int numberOfEvents) throws Throwable
+	{
 		ratings = new Ratings();
-		event = new Event();
+		firstEvent = new Event();
+		if (numberOfEvents == 2)
+		{
+			secondEvent = new Event();
+		}
 	}
-	
+
 	@When("^I rate event (\\d+) as (\\d+)$")
-	public void rateEvent(int eventID, int eventRating) throws Throwable {
-		ratings.rate(event, eventRating);
+	public void rateEvent(int eventID, int eventRating) throws Throwable
+	{
+		if (eventID == 1)
+			ratings.rate(firstEvent, eventRating);
+		else
+			ratings.rate(secondEvent, eventRating);
 	}
 
-	@Then("^event (\\d+) rating is recorded as (\\d+)$")
-	public void event_rating_is_recorded_as(int eventID, int eventRating) throws Throwable {
+	@Then("^event (\\d+)'s rating is recorded as (\\d+)$")
+	public void eventRatingIsRecordedAs(int eventID, int eventRating)
+			throws Throwable
+	{
+
+		Event event = firstEvent;
+		if (eventID == 2)
+			event = secondEvent;
+
 		assertThat(ratings.getRating(event), is(eventRating));
+
 	}
 
-	//^only the first event's rating is recorded$
+	@Then("^event (\\d+) is unrated$")
+	public void eventIsUnrated(int eventID) throws Throwable
+	{
+		Event event = firstEvent;
+		if (eventID == 2)
+			event = secondEvent;
+
+		assertThat(ratings.getRating(event), is(0));
+	}
 }

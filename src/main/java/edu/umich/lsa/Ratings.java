@@ -1,16 +1,30 @@
 package edu.umich.lsa;
 
+import java.util.HashMap;
+import java.util.Map;
 
-public class Ratings {
+public class Ratings
+{
 
-	private int eventRating;
+	private final Map<Event, Integer> ratings;
 
-	public int getRating(Event event) {
-		return eventRating;
+	public Ratings()
+	{
+		ratings = new HashMap<Event, Integer>();
 	}
 
-	public void rate(Event event, int eventRating) {
-		this.eventRating = eventRating;
+	public int getRating(Event event)
+	{
+		Integer rating = ratings.get(event);
+		if (rating == null)
+		{
+			return 0;
+		}
+		return rating;
 	}
 
+	public void rate(Event event, int eventRating)
+	{
+		ratings.put(event, eventRating);
+	}
 }
