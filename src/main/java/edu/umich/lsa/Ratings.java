@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Ratings
 {
-
+	public static final int UNRATED = -1;
 	private final Map<Event, Integer> ratings;
 
 	public Ratings()
@@ -18,7 +18,7 @@ public class Ratings
 		Integer rating = ratings.get(event);
 		if (rating == null)
 		{
-			return 0;
+			return UNRATED;
 		}
 		return rating;
 	}

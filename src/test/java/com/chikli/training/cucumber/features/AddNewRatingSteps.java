@@ -54,6 +54,6 @@ public class AddNewRatingSteps
 		if (eventID == 2)
 			event = secondEvent;
 
-		assertThat(ratings.getRating(event), is(0));
+		assertThat(ratings.getRating(event), is(Ratings.UNRATED));
 	}
 }

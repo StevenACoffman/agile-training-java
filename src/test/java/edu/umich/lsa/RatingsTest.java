@@ -5,17 +5,20 @@ import static org.junit.Assert.assertThat;
 
 import org.junit.Test;
 
-public class RatingsTest {
+public class RatingsTest
+{
 
 	@Test
-	public void noEventsAreRatedByDefault() {
+	public void noEventsAreRatedByDefault()
+	{
 		Ratings ratings = new Ratings();
 		Event event = new Event();
-		assertThat(ratings.getRating(event), is(0));
+		assertThat(ratings.getRating(event), is(Ratings.UNRATED));
 	}
 
 	@Test
-	public void canRateEvent() throws Exception {
+	public void canRateEvent() throws Exception
+	{
 		Ratings ratings = new Ratings();
 		Event event = new Event();
 		ratings.rate(event, 4);
@@ -23,14 +26,15 @@ public class RatingsTest {
 	}
 
 	@Test
-	public void rateOneOutOfTwoEvents() throws Exception {
+	public void rateOneOutOfTwoEvents() throws Exception
+	{
 		Ratings ratings = new Ratings();
 		Event firstEvent = new Event();
 		Event secondEvent = new Event();
 
 		ratings.rate(firstEvent, 4);
 
-		assertThat(ratings.getRating(secondEvent), is(0));
+		assertThat(ratings.getRating(secondEvent), is(Ratings.UNRATED));
 	}
 
 }
