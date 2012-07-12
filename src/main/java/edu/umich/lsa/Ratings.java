@@ -11,8 +11,8 @@ import com.google.common.io.Files;
 public class Ratings
 {
 	public static final int UNRATED = -1;
-	public static final String FILE_NAME = System.getProperty("tmp.io.dir")
-			+ File.pathSeparator + "ratings.csv";
+	public static final String FILE_NAME = System.getProperty("java.io.tmpdir")
+			+ File.separator + "ratings.csv";
 	private final Map<Event, Integer> ratings;
 
 	public Ratings()
@@ -33,15 +33,24 @@ public class Ratings
 	public void rate(Event event, int eventRating)
 	{
 		ratings.put(event, eventRating);
+		writeRatings();
+	}
+
+	private void writeRatings()
+	{
 		File ratingFile = new File(FILE_NAME);
+		ratingFile.delete();
 		try
 		{
-			Files.append((event.getEventID() + "," + eventRating + System
-					.lineSeparator()), ratingFile, Charsets.UTF_8);
+			for (Event event : ratings.keySet())
+			{
+				int eventRating = ratings.get(event);
+				Files.append((event.getEventID() + "," + eventRating + System
+						.lineSeparator()), ratingFile, Charsets.UTF_8);
+			}
 		} catch (IOException e)
 		{
 			throw new RuntimeException("Failed to write to Ratings file", e);
 		}
-
 	}
 }

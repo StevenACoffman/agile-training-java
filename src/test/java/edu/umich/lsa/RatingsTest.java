@@ -80,7 +80,20 @@ public class RatingsTest
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
 		assertThat(lines.contains("5,10"), is(true));
 		assertThat(lines.contains("6,9"), is(true));
+	}
 
+	@Test
+	public void oneEventRatedTwice() throws Exception
+	{
+		Ratings ratings = new Ratings();
+		Event event = new Event(1);
+		ratings.rate(event, 5);
+		ratings.rate(event, 3);
+
+		File file = new File(Ratings.FILE_NAME);
+		List<String> lines = Files.readLines(file, Charsets.UTF_8);
+		assertThat(lines.contains("1,3"), is(true));
+		assertThat(lines.contains("1,5"), is(false));
 	}
 
 	@After
