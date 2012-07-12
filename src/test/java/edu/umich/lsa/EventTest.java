@@ -6,13 +6,15 @@ import static org.junit.Assert.assertThat;
 import org.junit.Test;
 
 import edu.umich.lsa.content.Event;
+import edu.umich.lsa.content.Storage;
 
 public class EventTest
 {
 	@Test
 	public void newEventIsUnrated()
 	{
-		Event event = new Event("1");
+		Storage storage = new Storage();
+		Event event = new Event("1", storage);
 		assertThat(event.getRating(), is(0));
 	}
 }

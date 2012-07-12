@@ -8,16 +8,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cucumber.annotation.After;
+import cucumber.annotation.Before;
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
 import edu.umich.lsa.content.Event;
+import edu.umich.lsa.content.Storage;
 
 public class AddNewRatingSteps
 {
 	private static final String EVENT_FILE_NAME = System.getProperty("java.io.tmpdir") + File.separator + "event.txt";
 
 	private List<Event> eventList;
+	
+	private Storage storage;
+	
+	@Before
+	public void createStorage()
+	{
+		storage = new Storage();
+	}
 
 	@Given("^there (?:is|are) (\\d+) events? that I have not rated$")
 	public void createEvents(int numberOfEvents) throws Throwable
@@ -25,7 +35,7 @@ public class AddNewRatingSteps
 		eventList = new ArrayList<Event>();
 		for (int i = 1; i <= numberOfEvents; i++)
 		{
-			eventList.add(new Event(Integer.toString(i)));
+			eventList.add(new Event(Integer.toString(i), storage));
 		}
 	}
 
@@ -40,7 +50,7 @@ public class AddNewRatingSteps
 	@Then("^event (\\d+)'s rating is recorded as (\\d+)$")
 	public void the_event_rating_is_recorded(int eventNumber, int rating) throws Throwable
 	{
-		Event newEvent = new Event(Integer.toString(eventNumber));
+		Event newEvent = new Event(Integer.toString(eventNumber), storage);
 		System.out.println("Rating Event Number:" + eventNumber + " as: " + rating);
 		assertThat(newEvent.getRating(), is(rating));
 
@@ -49,9 +59,9 @@ public class AddNewRatingSteps
 	@Then("^only the first event's rating is recorded$")
 	public void only_the_first_event_s_rating_is_recorded() throws Throwable
 	{
-		Event firstEventFromFile = new Event("1");
+		Event firstEventFromFile = new Event("1", storage);
 		assertThat(firstEventFromFile.getRating(), is(4));
-		Event secondEventFromFile = new Event("2");
+		Event secondEventFromFile = new Event("2", storage);
 		assertThat(secondEventFromFile.getRating(), is(0));
 	}
 
