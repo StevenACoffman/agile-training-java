@@ -2,6 +2,10 @@ package com.chikli.training.cucumber.features;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
+
+import java.io.File;
+
+import cucumber.annotation.After;
 import cucumber.annotation.en.Given;
 import cucumber.annotation.en.Then;
 import cucumber.annotation.en.When;
@@ -18,10 +22,10 @@ public class AddNewRatingSteps
 	public void createUnratedEvents(int numberOfEvents) throws Throwable
 	{
 		ratings = new Ratings();
-		firstEvent = new Event();
+		firstEvent = new Event(1);
 		if (numberOfEvents == 2)
 		{
-			secondEvent = new Event();
+			secondEvent = new Event(2);
 		}
 	}
 
@@ -55,5 +59,16 @@ public class AddNewRatingSteps
 			event = secondEvent;
 
 		assertThat(ratings.getRating(event), is(Ratings.UNRATED));
+	}
+
+	@After
+	public void deleteFile()
+	{
+		File ratingsFile = new File(Ratings.FILE_NAME);
+		if (ratingsFile.exists())
+		{
+			ratingsFile.delete();
+
+		}
 	}
 }
