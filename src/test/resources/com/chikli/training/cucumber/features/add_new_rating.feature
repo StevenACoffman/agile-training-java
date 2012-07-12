@@ -13,7 +13,7 @@ Scenario: Adding a new rating for one out of two events
 	Then event 1's rating is recorded as 4
 	And event 2 is unrated
 	
-@wip
+@ok
 Scenario: Allow 0 value ratings
 	Given there is 1 event that I have not rated
 	When I rate event 1 as 0
