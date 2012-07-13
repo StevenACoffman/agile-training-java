@@ -1,19 +1,12 @@
 package edu.umich.lsa;
 
-import static org.hamcrest.number.OrderingComparison.*;
-import static org.junit.Assert.*;
+import static org.hamcrest.number.OrderingComparison.lessThan;
 import static org.junit.Assert.assertThat;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Test;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
 
 public class PerformanceTest
 {
