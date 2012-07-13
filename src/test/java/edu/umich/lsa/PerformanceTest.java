@@ -33,7 +33,6 @@ public class PerformanceTest
 			}
 			assertThat((System.currentTimeMillis()-startTime), lessThan(millisecondsPerMinute*1L));
 		}
-		ratings.writeRatings();
 		long endTime = System.currentTimeMillis();
 		assertThat((endTime-startTime), lessThan(millisecondsPerMinute*1L));
 	}

@@ -8,51 +8,65 @@ import java.util.Map;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 
-public class Ratings
-{
+public class Ratings {
 	public static final int UNRATED = -1;
-	public static final String FILE_NAME = System.getProperty("java.io.tmpdir")
-			+ File.separator + "ratings.csv";
+	public static final String FILE_PATH = 
+			System.getProperty("java.io.tmpdir") +
+			File.separator + "ratings" + File.separator;
+	public static final String FILE_NAME_PREFIX = FILE_PATH + "eventRating";
+	public static final String FILE_NAME_EXTENSION = ".csv";
 	private final Map<Event, Integer> ratings;
 
-	public Ratings()
-	{
+	public Ratings() {
 		ratings = new HashMap<Event, Integer>();
 	}
 
-	public int getRating(Event event)
-	{
+	public int getRating(Event event) {
 		Integer rating = ratings.get(event);
-		if (rating == null)
-		{
+		if (rating == null) {
 			return UNRATED;
 		}
 		return rating;
 	}
 
-	public void rate(Event event, int eventRating)
-	{
+	public void rate(Event event, int eventRating) {
 		ratings.put(event, eventRating);
+		writeRating(event);
 	}
 
-	public void writeRatings()
-	{
-		File ratingFile = new File(FILE_NAME);
+	private void writeRating(Event event) {
+		File ratingDirectory = new File(FILE_PATH);
+		if(!ratingDirectory.exists())
+		{
+			ratingDirectory.mkdir();
+		}
+		File ratingFile = new File(FILE_NAME_PREFIX + event.getEventID()
+				+ FILE_NAME_EXTENSION);
 		ratingFile.delete();
-		try
-		{
+		try {
 			StringBuilder builder = new StringBuilder();
-			for (Event event : ratings.keySet())
-			{
-				int eventRating = ratings.get(event);
-				builder.append((event.getEventID() + "," + eventRating + System
-					.lineSeparator()));
-			}
+
+			int eventRating = ratings.get(event);
+			builder.append(event.getEventID()).append(",").append(eventRating)
+					.append(System.lineSeparator());
+
 			Files.append(builder.toString(), ratingFile, Charsets.UTF_8);
-			System.out.println(FILE_NAME);
-		} catch (IOException e)
-		{
+		} catch (IOException e) {
 			throw new RuntimeException("Failed to write to Ratings file", e);
 		}
+	}
+	public void deleteAllFiles() throws IOException
+	{
+		File ratingsDirectory = new File(FILE_PATH);
+		
+		if (ratingsDirectory.exists() && ratingsDirectory.isDirectory())
+		{
+			for (File currentFile : ratingsDirectory.listFiles())
+			{
+				currentFile.delete();
+			}
+			ratingsDirectory.delete();
+		} 
+		
 	}
 }
