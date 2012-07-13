@@ -33,21 +33,23 @@ public class Ratings
 	public void rate(Event event, int eventRating)
 	{
 		ratings.put(event, eventRating);
-		writeRatings();
 	}
 
-	private void writeRatings()
+	public void writeRatings()
 	{
 		File ratingFile = new File(FILE_NAME);
 		ratingFile.delete();
 		try
 		{
+			StringBuilder builder = new StringBuilder();
 			for (Event event : ratings.keySet())
 			{
 				int eventRating = ratings.get(event);
-				Files.append((event.getEventID() + "," + eventRating + System
-						.lineSeparator()), ratingFile, Charsets.UTF_8);
+				builder.append((event.getEventID() + "," + eventRating + System
+					.lineSeparator()));
 			}
+			Files.append(builder.toString(), ratingFile, Charsets.UTF_8);
+			System.out.println(FILE_NAME);
 		} catch (IOException e)
 		{
 			throw new RuntimeException("Failed to write to Ratings file", e);

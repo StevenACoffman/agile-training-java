@@ -36,6 +36,7 @@ public class EventRatingFeaturesSteps
 		ratings = new Ratings();
 		firstEvent = new Event(1);
 		ratings.rate(firstEvent, eventRating);
+		ratings.writeRatings();
 	}
 
 	@When("^I rate event (\\d+) as (\\d+)$")
@@ -45,6 +46,7 @@ public class EventRatingFeaturesSteps
 			ratings.rate(firstEvent, eventRating);
 		else
 			ratings.rate(secondEvent, eventRating);
+		ratings.writeRatings();
 	}
 
 	@Then("^event (\\d+)'s rating is recorded as (\\d+)$")

@@ -29,6 +29,7 @@ public class RatingsTest
 		Ratings ratings = new Ratings();
 		Event event = new Event(2);
 		ratings.rate(event, 4);
+		ratings.writeRatings();
 		assertThat(ratings.getRating(event), is(4));
 	}
 
@@ -40,6 +41,7 @@ public class RatingsTest
 		Event secondEvent = new Event(4);
 
 		ratings.rate(firstEvent, 4);
+		ratings.writeRatings();
 
 		assertThat(ratings.getRating(secondEvent), is(Ratings.UNRATED));
 	}
@@ -50,6 +52,7 @@ public class RatingsTest
 		Ratings ratings = new Ratings();
 		Event event = new Event(5);
 		ratings.rate(event, 10);
+		ratings.writeRatings();
 
 		File file = new File(Ratings.FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
@@ -75,6 +78,8 @@ public class RatingsTest
 
 		Event secondEvent = new Event(6);
 		ratings.rate(secondEvent, 9);
+		
+		ratings.writeRatings();
 
 		File file = new File(Ratings.FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
@@ -89,6 +94,7 @@ public class RatingsTest
 		Event event = new Event(1);
 		ratings.rate(event, 5);
 		ratings.rate(event, 3);
+		ratings.writeRatings();
 
 		File file = new File(Ratings.FILE_NAME);
 		List<String> lines = Files.readLines(file, Charsets.UTF_8);
