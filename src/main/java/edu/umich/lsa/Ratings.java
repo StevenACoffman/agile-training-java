@@ -48,7 +48,7 @@ public class Ratings {
 
 			int eventRating = ratings.get(event);
 			builder.append(event.getEventID()).append(",").append(eventRating)
-					.append(System.getProperty("line.seperator"));
+					.append(System.getProperty("line.separator"));
 
 			Files.append(builder.toString(), ratingFile, Charsets.UTF_8);
 		} catch (IOException e) {

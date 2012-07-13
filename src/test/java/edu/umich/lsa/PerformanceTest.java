@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertThat;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
@@ -35,5 +36,11 @@ public class PerformanceTest
 		}
 		long endTime = System.currentTimeMillis();
 		assertThat((endTime-startTime), lessThan(millisecondsPerMinute*1L));
+	}
+	@After
+	public void deleteFiles() throws IOException
+	{
+		Ratings ratings = new Ratings();
+		ratings.deleteAllFiles();
 	}
 }
