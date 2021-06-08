@@ -18,7 +18,7 @@
 		<slf4j.version>1.6.6</slf4j.version>
 		<cucumber.version>1.0.10</cucumber.version>
 		<junit.version>4.10</junit.version>
-		<logback.version>1.0.6</logback.version>
+		<logback.version>1.2.0</logback.version>
 
 		<clean.plugin.version>2.5</clean.plugin.version>
 		<compiler.plugin.version>2.5.1</compiler.plugin.version>
